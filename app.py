@@ -3,7 +3,6 @@ from flask_migrate import Migrate
 from models import db, Company, User, Problem
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 
-
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ecommerce.db'
 app.config['JWT_SECRET_KEY'] = 'your_secret_key'
@@ -11,6 +10,10 @@ app.config['JWT_SECRET_KEY'] = 'your_secret_key'
 db.init_app(app)
 migrate = Migrate(app, db)
 jwt = JWTManager(app)
+
+@app.route('/')
+def index():
+    return jsonify({"message": "Welcome to the E-commerce Admin Panel API"})
 
 @app.route('/approve_company/<int:company_id>', methods=['POST'])
 @jwt_required()
